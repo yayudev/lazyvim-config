@@ -117,6 +117,8 @@ require("lazy").setup({
       end,
     },
     { "roobert/tailwindcss-colorizer-cmp.nvim", config = true },
+    { "kevinhwang91/promise-async" },
+    { "kevinhwang91/nvim-ufo", requires = "kevinhwang91/promise-async" },
     -- import/override with your plugins
     { "wuelnerdotexe/vim-astro" },
     { "xiyaowong/transparent.nvim" },
@@ -160,4 +162,20 @@ require("lazy").setup({
   },
 })
 
+-- theme
 vim.cmd([[colorscheme tokyonight-day]])
+
+-- UFO
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.foldingRange = {
+  dynamicRegistration = false,
+  lineFoldingOnly = true,
+}
+local language_servers = require("lspconfig").util.available_servers() -- or list servers manually like {'gopls', 'clangd'}
+for _, ls in ipairs(language_servers) do
+  require("lspconfig")[ls].setup({
+    capabilities = capabilities,
+    -- you can add other fields for setting up lsp server in this table
+  })
+end
+require("ufo").setup()
