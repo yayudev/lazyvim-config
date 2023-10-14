@@ -72,7 +72,7 @@ require("lazy").setup({
         },
         setup = {
           eslint = function()
-            require("lazyvim.util").on_attach(function(client)
+            require("lazyvim.util").lsp.on_attach(function(client)
               if client.name == "eslint" then
                 client.server_capabilities.documentFormattingProvider = true
               elseif client.name == "tsserver" then
@@ -109,13 +109,6 @@ require("lazy").setup({
         },
       },
     },
-    {
-      "goolord/alpha-nvim",
-      dependencies = { "nvim-tree/nvim-web-devicons" },
-      config = function()
-        require("alpha").setup(require("alpha.themes.startify").config)
-      end,
-    },
     { "roobert/tailwindcss-colorizer-cmp.nvim", config = true },
     { "kevinhwang91/promise-async" },
     { "kevinhwang91/nvim-ufo", requires = "kevinhwang91/promise-async" },
@@ -132,6 +125,23 @@ require("lazy").setup({
           floats = "transparent",
         },
       },
+    },
+    {
+      "nvim-neo-tree/neo-tree.nvim",
+      branch = "v3.x",
+      dependencies = {
+        "nvim-lua/plenary.nvim",
+        "nvim-tree/nvim-web-devicons",
+        "MunifTanjim/nui.nvim",
+      },
+      config = function()
+        require("neo-tree").setup({
+          window = {
+            position = "right",
+            auto_resize = true,
+          },
+        })
+      end,
     },
     { import = "plugins" },
   },
